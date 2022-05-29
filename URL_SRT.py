@@ -1,4 +1,4 @@
-import requests
+from requests import post
 print("""
 ██╗   ██╗██████╗ ██╗      ███████╗██████╗ ████████╗    
 ██║   ██║██╔══██╗██║      ██╔════╝██╔══██╗╚══██╔══╝    
@@ -6,57 +6,19 @@ print("""
 ██║   ██║██╔══██╗██║╚════╝╚════██║██╔══██╗   ██║       
 ╚██████╔╝██║  ██║███████╗ ███████║██║  ██║   ██║       
  ╚═════╝ ╚═╝  ╚═╝╚══════╝ ╚══════╝╚═╝  ╚═╝   ╚═╝       
-<\> @TweakPY                                                       
+            By @TweakPY  -  @vv1ck                                                  
 """)
-print("---------------------")
-more_one=int(input("1) One Link\n2) More Than One\n3) Short Link\n---------------------\n"))
-print("~~~~~~~~~~~~~~~~~~~~~")
-if more_one==1:
-	to_short=input("[?] Type the Url: ")
-	url=f"https://chkweb.tk/bit.ly/main.php?url={to_short}"
-	req=requests.post(url)
-	if "true" in req.text:
-		print(f"[+] Done shorting the url.")
-		print("===================================")
-		print(f"[+] The url befor:\n"+req.json()["data"]["long_url"])
-		print("===================================")
-		print(f"[+] The url after shorting:\n"+req.json()["data"]["short"])
-		print("===================================")
-	elif "invalid" in req.text:print("[!] Please Type a valid link..")
-	else:print(f"[!] >> Error in Shorting" )
-elif more_one==2:
-	to_short=input( "[?]-1 Type the Url: ")
-	to_short2=input("[?]-2 Type the Url: ")
-	to_short3=input("[?]-3 Type the Url: ")
-	req=requests.post(f"https://chkweb.tk/bit.ly/main.php?url={to_short}")
-	req2=requests.post(f"https://chkweb.tk/bit.ly/main.php?url={to_short2}")
-	req3=requests.post(f"https://chkweb.tk/bit.ly/main.php?url={to_short3}")
-	if "true" in req.text:
-		print("===================================")
-		print(f"[+]-1 The url befor:\n"+req.json()["data"]["long_url"])
-		print(f"[+]-1 The url after shorting:\n"+req.json()["data"]["short"])
-		print("===================================")
-	elif "invalid" in req.text:print("[!]-1 Please Type a valid link..")
-	else:print(f"[!]-1 >> Error in Shorting" )
-	if "true" in req2.text:
-		print(f"[+]-2 The url befor:\n"+req2.json()["data"]["long_url"])
-		print(f"[+]-2 The url after shorting:\n"+req2.json()["data"]["short"])
-		print("===================================")
-	elif "invalid" in req2.text:print("[!]-2 Please Type a valid link..")
-	else:print(f"[!]-2 >> Error in Shorting" )
-	if "true" in req3.text:
-		print(f"[+]-3 The url befor:\n"+req3.json()["data"]["long_url"])
-		print(f"[+]-3 The url after shorting:\n"+req3.json()["data"]["short"])
-		print("===================================")
-	elif "invalid" in req3.text:print("[!]-3 Please Type a valid link..")
-	else:print(f"[!]-3 >> Error in Shorting" )
-elif more_one==4:
-	API_KEY='8a7a79e75bf4d990986f7a63e7c6cc71e5612f7c'
-	to_short=input("[?] Type The Url : ")	
-	data={'access_token':API_KEY, 'uri':to_short}
-	url='https://api-ssl.bitly.com/v3/shorten'
-	response=requests.post(url,data=data)
-	if 'url' in response.text:print(response.json()['data']['url'])
-	else:print("[!?] Error with shorting the url")
+c=int(input("1-short Link with bitly\n2-short Link with hideuri\n:"))
+if c==1:
+	to_short=input("[?] The url : ")	
+	res=post('https://api-ssl.bitly.com/v3/shorten',data={'access_token':'8a7a79e75bf4d990986f7a63e7c6cc71e5612f7c','uri':to_short})
+	if 'url' in res.text:print('[+] Your short url : '+res.json()['data']['url'])
+	else:print("[!] Error shorting the url")
+elif c==2:
+    url_short=input("[?] The url : ")	
+    res=post('https://hideuri.com/api/v1/shorten',headers={'Host': 'hideuri.com','Cookie': '_cfvdata=as874as89sa9as84s89f4asfa8f','User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Accept': 'application/json, text/javascript, */*; q=0.01','Accept-Language': 'ar,en-US;q=0.7,en;q=0.3','Accept-Encoding': 'gzip, deflate','Referer': 'https://hideuri.com/','Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8','X-Requested-With': 'XMLHttpRequest','Content-Length': '47','Origin': 'https://hideuri.com','Te': 'trailers'},data=f'url={url_short}')
+    if 'result_url' in res.json():print('[+] Your short url : '+res.json()['result_url'])
+    elif 'error' in res.json():print('[!] The Error is => : '+res.json()['error'])
+    else:print('[!] Error ..')
 else:exit("Alright ..")
 
