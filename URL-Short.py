@@ -110,5 +110,6 @@ def Core():
 
 
 
-Core()
-print('\n')
+        
+        
+Core();print('\n')
